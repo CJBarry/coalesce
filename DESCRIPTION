@@ -1,0 +1,21 @@
+Package: coalesce
+Type: Package
+Title: Coalesce a field of weighted points
+Version: 0.1.0
+Date: 28/03/2017
+Author: Christopher Barry
+Maintainer: <cjbarry.hydrogeo@gmail.com>
+Description:
+    Organise a field of points with weights by coalescing groups of nearby
+    points.  Points that are closer than a given search radius from each
+    other are grouped, conserving both mass and centre of mass.  Uses the
+    fast subsetting and aggregation capabilities of the data.table package.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Depends:
+    R (>= 3.0.0),
+    data.table
+Imports:
+    plyr
+RoxygenNote: 6.0.1
