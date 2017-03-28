@@ -87,6 +87,7 @@ test.points <- function(n = 100L, TwoD = FALSE){
 #' \code{..$m} (num): mass/ weight
 #'
 #' @import data.table
+#' @importFrom plyr l_ply
 #' @export
 #'
 #' @examples
@@ -159,7 +160,7 @@ coalesce <- function(xyzm, cdh, cdv = cdh, mm = 0,
     nsr <- as.integer(sqrtnsr^2)
     # if not enough particles to justify subregions (or effectively one
     #  subregion)
-    if(nsr < 4L) subregions <- F
+    if(nsr < 4L) subregions <- FALSE
   }
 
   # groups points into 16 subgroups to reduce the number of distance
@@ -322,7 +323,7 @@ coalesce <- function(xyzm, cdh, cdv = cdh, mm = 0,
           assign("mnp.modifier", mnp.modifier + 1L, fe)
         }
 
-        #all small: all to be coalesced together
+        # all small: all to be coalesced together
         -1L
       }else{
         grvec <- 1:.N
@@ -331,8 +332,9 @@ coalesce <- function(xyzm, cdh, cdv = cdh, mm = 0,
         grvec[small] <- vapply(which(small), function(p){
           if(asd[p]) return(grvec[p])
 
-          #find closest particle (within subregion) to this small particle
-          #the closest particle's group label is assigned as this small particle's group label
+          # find closest particle (within subregion) to this small particle
+          # the closest particle's group label is assigned as this small
+          #  particle's group label
           zsepsq <- if(TwoD) 0 else ((z[p] - z)^2)*(cdh/cdv)^2
           if(nan.flag && !TwoD) zsepsq[is.nan(zsepsq)] <- 0
           dsq <- (x[p] - x)^2 + (y[p] - y)^2 + zsepsq
