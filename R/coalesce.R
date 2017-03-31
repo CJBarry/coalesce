@@ -316,6 +316,7 @@ coalesce <- function(xyzm, cdh, cdv = cdh, mm = 0,
     xyzm[, small := sm]; rm(sm)
 
     # make groups to coalesce each small particle with one or more others
+    bys <- if(subregions) "sr"
     xyzm[, group := {
       if(all(small)){
         # this step avoids infinite loops - see above
@@ -347,9 +348,10 @@ coalesce <- function(xyzm, cdh, cdv = cdh, mm = 0,
 
         grvec
       }
-    }, by = if(subregions) sr]
+    }, by = bys]
 
     # coalesce groups due to smallness
+    bys <- if(subregions) "group,sr" else "group"
     xyzm <- if(TwoD){
       xyzm[, if(identical(.N, 1L)){
         list(x = x, y = y, m = m)
@@ -363,7 +365,7 @@ coalesce <- function(xyzm, cdh, cdv = cdh, mm = 0,
       }else{
         xyz <- lapply(list(x = x, y = y, z = z), weighted.mean, m)
         c(xyz, list(m = sum(m)))
-      }, by = c("group", if(subregions) "sr")]
+      }, by = bys]
     }
 
     # small particles are now moved to new homes, so to speak, so can delete
