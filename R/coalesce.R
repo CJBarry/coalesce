@@ -157,7 +157,7 @@ coalesce <- function(xyzm, cdh, cdv = cdh, mm = 0,
   #  least 256 (or nppsr) points per subregion
   if(subregions){
     sqrtnsr <- as.integer(sqrt(np)%/%sqrt(nppsr))
-    nsr <- as.integer(sqrtnsr^2)
+    nsr <- as.integer(sqrtnsr^2L)
     # if not enough particles to justify subregions (or effectively one
     #  subregion)
     if(nsr < 4L) subregions <- FALSE
@@ -246,7 +246,7 @@ coalesce <- function(xyzm, cdh, cdv = cdh, mm = 0,
       }else{
         xy <- lapply(list(x = x, y = y), weighted.mean, m)
         c(xy, list(m = sum(m)))
-      }, by = group]
+      }, by = c("group", if(subregions) "sr")]
     }else{
       xyzm[, if(identical(.N, 1L)){
         list(x = x, y = y, z = z, m = m)
@@ -358,7 +358,7 @@ coalesce <- function(xyzm, cdh, cdv = cdh, mm = 0,
       }else{
         xy <- lapply(list(x = x, y = y), weighted.mean, m)
         c(xy, list(m = sum(m)))
-      }, by = group]
+      }, by = bys]
     }else{
       xyzm[, if(identical(.N, 1L)){
         list(x = x, y = y, z = z, m = m)

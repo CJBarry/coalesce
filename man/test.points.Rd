@@ -28,3 +28,4 @@ test.points(150L)
 \dontrun{test.points(1e5)}
 
 }
+

@@ -94,3 +94,4 @@ legend("bottom", legend = c("original", "cdh = 5", "cdh = 10"),
        bg = "white")
 
 }
+

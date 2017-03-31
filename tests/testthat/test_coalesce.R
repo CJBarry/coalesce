@@ -67,13 +67,13 @@ test_that("check conservation of mass and centre of mass", {
     expect_silent(cps <- coalesce(tps, 0, mm = sample(seq(0, .5, .1), 1L),
                                   TwoD = TRUE))
     expect_coal(cps, tps)
-    # expect_silent(cps <- coalesce(tps, sample(1:20, 1L),
-    #                               mm = sample(seq(0, .5, .1), 1L),
-    #                               TwoD = TRUE))
-    # expect_coal(cps, tps)
-    # expect_silent(cps <- coalesce(tps, sample(1:20, 1),
-    #                               maxnp = sample(1:20, 1L), TwoD = TRUE))
-    # expect_coal(cps, tps)
+    expect_silent(cps <- coalesce(tps, sample(1:20, 1L),
+                                  mm = sample(seq(0, .5, .1), 1L),
+                                  TwoD = TRUE))
+    expect_coal(cps, tps)
+    expect_silent(cps <- coalesce(tps, sample(1:20, 1),
+                                  maxnp = sample(1:20, 1L), TwoD = TRUE))
+    expect_coal(cps, tps)
     expect_silent(cps <- coalesce(tps, sample(1:20, 1),
                                   subregions = FALSE, TwoD = TRUE))
     expect_coal(cps, tps)
