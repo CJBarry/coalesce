@@ -92,3 +92,13 @@ test_that("check conservation of mass and centre of mass", {
     expect_coal(cps, tps)
   }
 })
+
+test_that("maxnp", {
+  tps <- test.points(6L, FALSE)
+  expect_silent(cps <- coalesce(tps, .1, mm = .01, maxnp = 5L))
+  expect_coal(cps, tps)
+
+  tps <- test.points(6L, TRUE)
+  expect_silent(cps <- coalesce(tps, .1, mm = .01, maxnp = 5L, TwoD = TRUE))
+  expect_coal(cps, tps)
+})

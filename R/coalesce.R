@@ -87,7 +87,6 @@ test.points <- function(n = 100L, TwoD = FALSE){
 #' \code{..$m} (num): mass/ weight
 #'
 #' @import data.table
-#' @importFrom plyr l_ply
 #' @export
 #'
 #' @examples
@@ -206,7 +205,7 @@ coalesce <- function(xyzm, cdh, cdv = cdh, mm = 0,
 
       # those particle numbers within particle p's subregion to which p is
       #  close, including self
-      cl <- l_ply(.N:1, function(p){
+      cl <- lapply(.N:1, function(p){
         # if this particle is already assigned to a group, then skip
         if(asd[p]) return(integer(0L))
 
@@ -228,6 +227,8 @@ coalesce <- function(xyzm, cdh, cdv = cdh, mm = 0,
         #  as they are distinct only need to be distinct within subregion
         #  because by = c("group", "sr") is used for the grouping
         grvec[wcl] <<- p
+
+        NULL
       })
 
       # return value
@@ -278,11 +279,9 @@ coalesce <- function(xyzm, cdh, cdv = cdh, mm = 0,
   #    particle counts
   # - mm > 0 is dealt with in a different way: groups with one small
   #    particle are given a special -1 group label which are then ignored
-  # - thus is is possible for some particles with m < mm to be retained
-  if(subregions && is.finite(maxnp)){
-    # this will be reset with each loop
-    assign("mnp.modifier", 0L, fe)
-  }
+  # - thus it is possible for some particles with m < mm to be retained
+  # - this will be reset with each loop
+  assign("mnp.modifier", 0L, fe)
 
   smallf <- expression({
     if(maxbymm && np > maxnp){
