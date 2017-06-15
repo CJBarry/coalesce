@@ -17,6 +17,6 @@ Depends:
     data.table
 Imports:
     plyr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Suggests:
     testthat

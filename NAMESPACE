@@ -3,4 +3,3 @@
 export(coalesce)
 export(test.points)
 import(data.table)
-importFrom(plyr,l_ply)
